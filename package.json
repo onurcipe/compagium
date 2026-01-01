@@ -22,8 +22,17 @@
         "type": "individual",
         "url": "https://onurcipe.com/donate"
     },
+    "type": "module",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/onurcipe/compagium.git"
+    },
+    "scripts": {
+        "build": "tsc",
+        "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
+    },
+    "devDependencies": {
+        "@types/node": "^22.19.3",
+        "typescript": "^5.9.3"
     }
 }
