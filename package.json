@@ -1,0 +1,29 @@
+{
+    "name": "compagium",
+    "version": "0.0.0",
+    "description": "A Node.js framework with built-in best practices.",
+    "keywords": [
+        "compagium",
+        "node",
+        "node.js",
+        "framework"
+    ],
+    "homepage": "https://github.com/onurcipe/compagium#readme",
+    "bugs": {
+        "url": "https://github.com/onurcipe/compagium/issues"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Onur Cipe",
+        "email": "onur@onurcipe.com",
+        "url": "https://onurcipe.com/"
+    },
+    "funding": {
+        "type": "individual",
+        "url": "https://onurcipe.com/donate"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/onurcipe/compagium.git"
+    }
+}
