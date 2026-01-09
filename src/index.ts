@@ -38,6 +38,15 @@ import {
     isArray,
 } from "./util/data-type/array.js";
 
+/* error */
+
+/* -- core */
+import BaseError from "./error/core/BaseError.js";
+
+import FrameworkError from "./error/core/FrameworkError.js";
+
+import DeveloperError from "./error/core/DeveloperError.js";
+
 export {
     /* util */
 
@@ -73,4 +82,17 @@ export {
 
     /* ---- array */
     isArray,
+
+    /* error */
+
+    /* -- core */
+
+    /* ---- base */
+    BaseError,
+
+    /* ---- framework */
+    FrameworkError,
+
+    /* ---- developer */
+    DeveloperError,
 };
