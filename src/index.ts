@@ -53,6 +53,9 @@ import type {
     FactoryArgs,
 } from "./core/Factory.js";
 
+import Registry from "./core/Registry.js";
+import type {RegistryToken} from "./core/Registry.js";
+
 export {
     /* util */
 
@@ -101,6 +104,11 @@ export {
 
     /* ---- developer */
     DeveloperError,
+
+    /* core */
+
+    /* -- registry */
+    Registry,
 };
 
 export type {
@@ -109,4 +117,7 @@ export type {
     /* -- factory */
     Factory,
     FactoryArgs,
+
+    /* -- registry */
+    RegistryToken,
 };
