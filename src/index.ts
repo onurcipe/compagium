@@ -67,6 +67,10 @@ import type {
     LogLevel,
 } from "./core/Logger.js";
 
+import type {
+    Connector,
+} from "./core/Connector.js";
+
 export {
     /* util */
 
@@ -143,4 +147,7 @@ export type {
     LogTarget,
 
     LogLevel,
+
+    /* -- connector */
+    Connector,
 };
