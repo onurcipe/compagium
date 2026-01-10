@@ -71,6 +71,10 @@ import type {
     Connector,
 } from "./core/Connector.js";
 
+import type {
+    Transport,
+} from "./core/Transport.js";
+
 export {
     /* util */
 
@@ -150,4 +154,7 @@ export type {
 
     /* -- connector */
     Connector,
+
+    /* -- transport */
+    Transport,
 };
