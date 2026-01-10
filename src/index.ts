@@ -47,6 +47,12 @@ import FrameworkError from "./error/core/FrameworkError.js";
 
 import DeveloperError from "./error/core/DeveloperError.js";
 
+/* core */
+import type {
+    Factory,
+    FactoryArgs,
+} from "./core/Factory.js";
+
 export {
     /* util */
 
@@ -95,4 +101,12 @@ export {
 
     /* ---- developer */
     DeveloperError,
+};
+
+export type {
+    /* core */
+
+    /* -- factory */
+    Factory,
+    FactoryArgs,
 };
