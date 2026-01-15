@@ -2,8 +2,10 @@ import process from "node:process";
 
 import {isPresent, isPopulated} from "../util/core/value.js";
 import FrameworkError from "../error/core/FrameworkError.js";
+import AbortError from "../error/core/AbortError.js";
 import Registry from "./Registry.js";
 import Logger from "./Logger.js";
+import Aborter from "./Aborter.js";
 import type {Connector} from "./Connector.js";
 import type {Transport} from "./Transport.js";
 
@@ -52,6 +54,8 @@ class Runtime
 
     private readonly logger: Logger;
     private readonly config: RuntimeConfig;
+
+    private readonly aborter: Aborter = new Aborter();
 
     private connectors: Connector[] = [];
     private transports: Transport[] = [];
@@ -214,6 +218,8 @@ class Runtime
             return;
         }
 
+        this.aborter.abort("stop");
+
         this.stopping = (
             async (): Promise<void> =>
             {
@@ -233,6 +239,8 @@ class Runtime
 
     private async startCore (): Promise<void>
     {
+        this.aborter.reset();
+
         this.state = "starting";
         this.logger.log(2, "info", "The runtime is starting...");
 
@@ -272,6 +280,18 @@ class Runtime
         {
             this.exit(1);
         }
+    }
+
+    private logAbort (): void
+    {
+        if (!this.aborter.isAborted())
+        {
+            return;
+        }
+
+        const reason: string | null = this.aborter.getReason();
+
+        this.logger.log(1, "info", `The runtime has aborted${isPresent(reason) ? ` (${reason})` : ""}.`);
     }
 
     private handleUnhandledRejection: (reason: unknown, promise: Promise<unknown>) => Promise<void> = async (reason: unknown, promise: Promise<unknown>): Promise<void> =>
@@ -316,6 +336,8 @@ class Runtime
 
     private handleProcessInterruptSignal: () => Promise<void> = async (): Promise<void> =>
     {
+        this.aborter.abort("SIGINT", {isOverride: true});
+
         try
         {
             await this.stopOnce();
@@ -333,6 +355,8 @@ class Runtime
 
     private handleProcessTerminateSignal: () => Promise<void> = async (): Promise<void> =>
     {
+        this.aborter.abort("SIGTERM", {isOverride: true});
+
         try
         {
             await this.stopOnce();
@@ -399,13 +423,18 @@ class Runtime
 
         try
         {
-            await this.config.init(this);
+            await this.aborter.await(this.config.init(this));
         }
         catch (error: unknown)
         {
             isOk = false;
 
-            this.logger.log(0, "error", error);
+            this.logAbort();
+
+            if (!(error instanceof AbortError))
+            {
+                this.logger.log(0, "error", error);
+            }
         }
 
         this.logger.log(1, "info", `The runtime has ${isOk ? "run" : "failed to run"} the init hook.`);
@@ -434,13 +463,22 @@ class Runtime
                 const connector: Connector = createConnector(this);
                 this.connectors.push(connector);
 
-                await connector.connect();
+                await this.aborter.await(connector.connect());
 
                 okCount++;
             }
             catch (error: unknown)
             {
-                this.logger.log(0, "error", error);
+                if (this.aborter.isAborted())
+                {
+                    this.logAbort();
+                    break;
+                }
+
+                if (!(error instanceof AbortError))
+                {
+                    this.logger.log(0, "error", error);
+                }
             }
         }
 
@@ -503,13 +541,22 @@ class Runtime
                 const transport: Transport = createTransport(this);
                 this.transports.push(transport);
 
-                await transport.start();
+                await this.aborter.await(transport.start());
 
                 okCount++;
             }
             catch (error: unknown)
             {
-                this.logger.log(0, "error", error);
+                if (this.aborter.isAborted())
+                {
+                    this.logAbort();
+                    break;
+                }
+
+                if (!(error instanceof AbortError))
+                {
+                    this.logger.log(0, "error", error);
+                }
             }
         }
 
