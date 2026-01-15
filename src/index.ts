@@ -75,6 +75,16 @@ import type {
     Transport,
 } from "./core/Transport.js";
 
+import Runtime from "./core/Runtime.js";
+import type {
+    RuntimeConfig,
+    RuntimeInitHook,
+    RuntimeConnectorCreator,
+    RuntimeTransportCreator,
+
+    RuntimeState,
+} from "./core/Runtime.js";
+
 export {
     /* util */
 
@@ -134,6 +144,9 @@ export {
 
     /* -- logger */
     Logger,
+
+    /* -- runtime */
+    Runtime,
 };
 
 export type {
@@ -157,4 +170,12 @@ export type {
 
     /* -- transport */
     Transport,
+
+    /* -- runtime */
+    RuntimeConfig,
+    RuntimeInitHook,
+    RuntimeConnectorCreator,
+    RuntimeTransportCreator,
+
+    RuntimeState,
 };
