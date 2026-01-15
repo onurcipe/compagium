@@ -50,6 +50,8 @@ import FrameworkError from "./error/core/FrameworkError.js";
 
 import DeveloperError from "./error/core/DeveloperError.js";
 
+import AbortError from "./error/core/AbortError.js";
+
 /* core */
 import type {
     Factory,
@@ -66,6 +68,8 @@ import type {
 
     LogLevel,
 } from "./core/Logger.js";
+
+import Aborter from "./core/Aborter.js";
 
 import type {
     Connector,
@@ -137,6 +141,9 @@ export {
     /* ---- developer */
     DeveloperError,
 
+    /* ---- abort */
+    AbortError,
+
     /* core */
 
     /* -- registry */
@@ -144,6 +151,9 @@ export {
 
     /* -- logger */
     Logger,
+
+    /* -- aborter */
+    Aborter,
 
     /* -- runtime */
     Runtime,
