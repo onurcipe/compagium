@@ -111,6 +111,27 @@ import type {
     MongoDBConnectorFactoryArgs,
 } from "./infra/connector/mongodb/MongoDBConnectorFactory.js";
 
+/* -- transport */
+
+/* ---- http server */
+import HttpServerTransport from "./infra/transport/http-server/HttpServerTransport.js";
+import type {
+    HttpServerTransportArgs,
+    HttpServerTransportDeps,
+    HttpServerTransportOptions,
+    HttpServerTransportConfig,
+    HttpServerOptions,
+    HttpsServerOptions,
+
+    HttpServerTransportState,
+} from "./infra/transport/http-server/HttpServerTransport.js";
+
+import createHttpServerTransport from "./infra/transport/http-server/HttpServerTransportFactory.js";
+import type {
+    HttpServerTransportFactory,
+    HttpServerTransportFactoryArgs,
+} from "./infra/transport/http-server/HttpServerTransportFactory.js";
+
 export {
     /* util */
 
@@ -191,6 +212,16 @@ export {
 
     /* ------ factory */
     createMongoDBConnector,
+
+    /* -- transport */
+
+    /* ---- http server */
+
+    /* ------ self */
+    HttpServerTransport,
+
+    /* ------ factory */
+    createHttpServerTransport,
 };
 
 export type {
@@ -241,4 +272,22 @@ export type {
     /* ------ factory */
     MongoDBConnectorFactory,
     MongoDBConnectorFactoryArgs,
+
+    /* -- transport */
+
+    /* ---- http server */
+
+    /* ------ self */
+    HttpServerTransportArgs,
+    HttpServerTransportDeps,
+    HttpServerTransportOptions,
+    HttpServerTransportConfig,
+    HttpServerOptions,
+    HttpsServerOptions,
+
+    HttpServerTransportState,
+
+    /* ------ factory */
+    HttpServerTransportFactory,
+    HttpServerTransportFactoryArgs,
 };
