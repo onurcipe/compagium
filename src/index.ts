@@ -89,6 +89,11 @@ import type {
     RuntimeState,
 } from "./core/Runtime.js";
 
+/* -- db */
+import type {
+    DbRepository,
+} from "./core/db/DbRepository.js";
+
 /* infra */
 
 /* -- connector */
@@ -253,6 +258,11 @@ export type {
     RuntimeTransportCreator,
 
     RuntimeState,
+
+    /* -- db */
+
+    /* ---- repository */
+    DbRepository,
 
     /* infra */
 
